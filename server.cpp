@@ -29,7 +29,7 @@ public://可以在类内部和外部访问
      *   - bind (ws2tcpip.h)：绑定socket到端口
      *   - listen (ws2tcpip.h)：监听端口
      */
-    GameServer(int port) : running(true) {//port参数指定监听端口
+    GameServer(int port) : running(true) {//port参数指定监听端口,构造函数在创建对象时自动调用，负责初始化对象状态和资源分配
         WSADATA wsaData;
         WSAStartup(MAKEWORD(2, 2), &wsaData); // 初始化网络库（ws2tcpip.h）
 
@@ -53,7 +53,7 @@ public://可以在类内部和外部访问
      *   - closesocket (ws2tcpip.h)：关闭socket
      *   - WSACleanup (ws2tcpip.h)：清理Winsock库
      */
-    ~GameServer() {
+    ~GameServer() {  //析构函数用于“对象生命结束时”的资源释放和清理工作，典型调用时机是对象生命周期结束、delete、函数退出、异常展开等
         for (SOCKET client : clients) {
             closesocket(client); // 关闭每个客户端socket（ws2tcpip.h）
         }
