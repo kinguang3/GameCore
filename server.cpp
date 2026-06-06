@@ -5,6 +5,8 @@
 #include <thread>      // 多线程支持
 #include <vector>      // 动态数组容器
 #include <ws2tcpip.h>  // Windows Socket 扩展
+#include <mutex>       // 互斥锁（如果需要线程安全的资源访问）
+#include "D:/GameCore/ThirdParty/httplib.h" // HTTP服务器库（假设路径正确）
 using namespace std;
 
 
@@ -17,6 +19,7 @@ private://只能在类内部访问
     SOCKET listenSocket;              // 监听客户端连接的 socket
     std::vector<SOCKET> clients;      // 已连接的客户端 socket 列表
     bool running;                     // 服务器运行状态标志
+    std::mutex clientsMutex;          // 保护客户端列表的互斥锁
 
 public://可以在类内部和外部访问
     // 构造函数，初始化服务器并开始监听指定端口
